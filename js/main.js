@@ -4,14 +4,19 @@ window.onload=function() {
   document.addEventListener("keydown",keyPush);
   setInterval(game,1000/15);
 }
-px=py=10;
-gs=tc=20;
-ax=ay=15;
+
+//Position Variables
 xv=yv=0;
+px=py=10;
+ax=ay=15;
+gs=tc=20;
+
+//Score and Snake Variables
 trail=[];
 tail = 5;
 highScore = 0;
 
+//Basic Snake Movement
 function game() {
   px+=xv;
   py+=yv;
@@ -27,6 +32,24 @@ function game() {
   if(py>tc-1) {
     py= 0;
   }
+
+  //Direction changes
+function keyPush(evt) {
+  switch(evt.keyCode) {
+    case 37:
+      xv=-1;yv=0;
+      break;
+    case 38:
+      xv=0;yv=-1;
+      break;
+    case 39:
+      xv=1;yv=0;
+      break;
+    case 40:
+      xv=0;yv=1;
+      break;
+  }
+}
 
   //background colour
   snakeCtx.fillStyle="black";
@@ -52,6 +75,7 @@ function game() {
     trail.shift();
   }
 
+  //Upon food capture
   if(ax==px && ay==py) {
     tail++;
     document.getElementById("scoreVal").innerHTML = tail - 5;
@@ -62,22 +86,4 @@ function game() {
   //food colour
   snakeCtx.fillStyle="white";
   snakeCtx.fillRect(ax*gs,ay*gs,gs-2,gs-2);
-}
-
-//direction events
-function keyPush(evt) {
-  switch(evt.keyCode) {
-    case 37:
-      xv=-1;yv=0;
-      break;
-    case 38:
-      xv=0;yv=-1;
-      break;
-    case 39:
-      xv=1;yv=0;
-      break;
-    case 40:
-      xv=0;yv=1;
-      break;
-  }
 }
